@@ -8,7 +8,7 @@
   * mediumMaze: We used the openSearch layout and the agent was also moving randomly and quickly, but does not look for the food. It took a longer time, more steps, and had a lower score. When the agent finds food, it does not continue in that direction and just moves randomly, oftentimes moving in circles in a blank section of the environment without any food. 
   
 ###Step 8: Exploring Environments
-1. Screenshot of [myLayout.lay](/myLayout.png)
+1. Screenshot of ![myLayout.lay](https://github.com/clairew2018/AI-Designing-Pac-Man-Agents/blob/master/Screen%20Shot%202017-09-17%20at%2012.24.03%20PM.png)
 2. Describe the agent's behaviour in myLayout and openSearch Environment
 
   * myLayout: 
