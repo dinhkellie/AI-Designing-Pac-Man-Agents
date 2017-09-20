@@ -46,4 +46,6 @@
 
 3. Project Reflection 
   
-> By doing this project, I learned a lot about the methods and code environment of Pac-Man game. By programming randomAgent and ReflexAgent, I was able to understand how agent makes basic movements with respect to the environment. The assignment also helped me learn a bit more about python and pair programming. 
+> Claire: By doing this project, I learned a lot about the methods and code environment of Pac-Man game. By programming randomAgent and ReflexAgent, I was able to understand how agent makes basic movements with respect to the environment. The assignment also helped me learn a bit more about python and pair programming. 
+
+> Kellie: This project was a fun introduction to designing agents. The Pac-Man interface was easy to navigate and the code base was fairly simple to sift through to find the appropriate methods. I thought it was a great introductory assignment and helped me brush up on my Python knowledge. The assignment was a good length and working in pairs allowed for more collaboration and creativity in the custom layouts. Describing the agent's behavior was sometimes difficult, as I felt the language for all of them was quite repetitive. I would like to learn how to better describe agents and how to keep those observations separate from the code implementation. 
