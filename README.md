@@ -45,4 +45,5 @@
   * myLayout: Initially the agent picks random directions because there is no pallete nearby, but as soon as a pallete is next to it, it quickly eats the pellete and move to the next one. myLayout has pelletes lining up, and the agent follows the lines where pelletes are. Towards the end when only one line of pelletes is left, the agent moves randomly again until it is next to a pellete, then it follows the line and eats every one of them. In this case, the agent is able to sense pelletes next to it, and orient itself towards where the pelletes are. It takes about less than one minute for the game to finish, with score 1193.0 and 100% win rate. 
 
 3. Project Reflection 
+  
   By doing this project, I learned a lot about the methods and code environment of Pac-Man game. By programming randomAgent and ReflexAgent, I was able to understand how agent makes basic movements with respect to the environment. The assignment also helped me learn a bit more about python and pair programming. 
