@@ -80,24 +80,24 @@ class Node:
         self.parent = parent
 
     def getState(self):
-        return state
+        return self.state
 
     def getAction(self):
-        return action 
+        return self.action 
 
     def getCost(self):
-        return cost
+        return self.cost
 
     def getParent(self):
-        return parent
+        return self.parent
 
-def getActions(node):
-    actions = []
-    if node.parent == None:
-        return actions
-    else:
-        actions.append(getActions(node.parent))
-
+def findPath(node):
+    listOfParents = []
+    listOfParents.append(node)
+    while(node.getParent()!=None):
+        listOfParents.append(node.getParent())
+        node = node.getParent()
+    return listOfParents[::-1]
 
 def depthFirstSearch(problem):
     """
@@ -115,17 +115,22 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
     #util.raiseNotDefined()
-    startNode = Node(problem.getStartState(), None, 0, None)
+    head = Node(problem.getStartState(), None, 0, None)
     Frontier = util.Stack()
-    Frontier.push(startNode)
+    Frontier.push(head)
     Explored = {}
-    while():
+    while(True):
         if Frontier.isEmpty():
             return []
         node = Frontier.pop()
-        if problem.isGoalState(node.getState())
-            return getActions(node)
-        Explored[node.state.getPacmanPosition()] = True
+        if problem.isGoalState(node.getState()):
+            listOfP = findPath(node)
+            path = []
+            for p in listOfP:
+                if(p.getAction()!=None):
+                    path.append(p.getAction())
+            return path
+        Explored[node.getState()] = True
         for succesorTrip in problem.getSuccessors(node.getState()):
             if succesorTrip[0] not in Explored:
                 nextNode = Node(succesorTrip[0], succesorTrip[1], succesorTrip[2], node)
@@ -135,7 +140,8 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
