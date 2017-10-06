@@ -99,6 +99,13 @@ def findPath(node):
         node = node.getParent()
     return listOfParents[::-1]
 
+def appendPath(node, listOfP):
+    path = []
+    for p in listOfP:
+        if(p.getAction()!=None):
+            path.append(p.getAction())
+    return path
+
 def depthFirstSearch(problem):
     """
     Search the deepest nodes in the search tree first.
@@ -164,8 +171,33 @@ def breadthFirstSearch(problem):
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    Frontier = util.PriorityQueue()
+    Frontier.push(Node(problem.getStartState(), None, 0, None), 0)
+    Explored = {}
+    while (not Frontier.isEmpty()):
+        node = Frontier.pop()
+        if problem.isGoalState(node.getState()):
+            listOfP = findPath(node)
+            path = []
+            for p in listOfP:
+                if(p.getAction()!=None):
+                    path.append(p.getAction())
+            return path
+        successors = problem.getSuccessors(node.getState())
+        for successor in successors:
+            if successor[0] not in Explored:
+                Explored[successor[0]] = True
+
+                # Change when you add this into another function
+                listofP = findPath(node)
+                path = appendPath(node, listofP)
+                path.append(successor[1])
+                cost = node.getCost()
+                nextNode = Node(successor[0], path, cost, node)
+                Frontier.push(nextNode, cost)
+        # Exhausted search space, no solution
+        return []
+
 
 def nullHeuristic(state, problem=None):
     """
