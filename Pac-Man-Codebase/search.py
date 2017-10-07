@@ -92,12 +92,16 @@ class Node:
         return self.parent
 
 def findPath(node):
+    path = []
     listOfParents = []
     listOfParents.append(node)
     while(node.getParent()!=None):
-        listOfParents.append(node.getParent())
+        listOfParents.insert(0,node.getParent())
         node = node.getParent()
-    return listOfParents[::-1]
+    for p in listOfParents:
+        if p.getAction()!=None:
+            path.append(p.getAction())
+    return path
 
 def depthFirstSearch(problem):
     """
@@ -119,21 +123,18 @@ def depthFirstSearch(problem):
     Frontier = util.Stack()
     Frontier.push(head)
     Explored = {}
+    path = []
     while(True):
         if Frontier.isEmpty():
-            return []
+            return path
         node = Frontier.pop()
         if problem.isGoalState(node.getState()):
-            listOfP = findPath(node)
-            path = []
-            for p in listOfP:
-                if(p.getAction()!=None):
-                    path.append(p.getAction())
+            path = findPath(node)
             return path
         Explored[node.getState()] = True
-        for succesorTrip in problem.getSuccessors(node.getState()):
-            if succesorTrip[0] not in Explored:
-                nextNode = Node(succesorTrip[0], succesorTrip[1], succesorTrip[2], node)
+        for state, action, cost in problem.getSuccessors(node.getState()):
+            if state not in Explored:
+                nextNode = Node(state, action, cost, node)
                 Frontier.push(nextNode)
 
 
@@ -144,28 +145,43 @@ def breadthFirstSearch(problem):
     Frontier = util.Queue()
     Frontier.push(head)
     Explored = {}
+    path = []
     while(True):
         if Frontier.isEmpty():
-            return []
+            return path
         node = Frontier.pop()
         if problem.isGoalState(node.getState()):
-            listOfP = findPath(node)
-            path = []
-            for p in listOfP:
-                if(p.getAction()!=None):
-                    path.append(p.getAction())
+            path = findPath(node)
             return path
         Explored[node.getState()] = True
-        for succesorTrip in problem.getSuccessors(node.getState()):
-            if succesorTrip[0] not in Explored:
-                nextNode = Node(succesorTrip[0], succesorTrip[1], succesorTrip[2], node)
+        for state, action, cost in problem.getSuccessors(node.getState()):
+            if state not in Explored:
+                nextNode = Node(state, action, cost, node)
                 Frontier.push(nextNode)
 
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    head = Node(problem.getStartState(), None, 0, None)
+    Frontier = util.PriorityQueue()
+    Frontier.push(head, head.getCost())
+    Explored = set()
+    path = []
+    while(True):
+        if Frontier.isEmpty():
+            return path
+        node = Frontier.pop()
+        if problem.isGoalState(node.getState()):
+            path= findPath(node)
+            return path
+        successors = problem.getSuccessors(node.getState())
+        for state, action, cost in successors:
+            if state not in Explored:
+                Explored.add(state)
+                cost = cost + node.getCost()
+                nextNode = Node(state, action, cost, node)
+                Frontier.push(nextNode, cost)
 
 def nullHeuristic(state, problem=None):
     """
@@ -177,7 +193,8 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    head = Node(problem.getStartState(), None, 0, None)
+    
 
 
 # Abbreviations
