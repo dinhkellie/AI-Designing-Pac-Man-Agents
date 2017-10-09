@@ -288,9 +288,10 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
-        self.visualize = True
+        # self.visualize = True
         #self.goal =
         #self.startState =
+        
 
     def getStartState(self):
         """
@@ -298,13 +299,26 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return (self.startingPosition, self.corners)
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
-        "*** YOUR CODE HERE ***"
+        print state[1]
+
+        current = state[0]
+        toVisit = state[1]
+        count = 0
+
+        for corner in toVisit:
+            if (corner in self.corners):
+                count += -1
+
+        if count == 0:
+            return True
+        else: 
+            return False
 
 
     def getSuccessors(self, state):
@@ -326,8 +340,24 @@ class CornersProblem(search.SearchProblem):
             #   dx, dy = Actions.directionToVector(action)
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
+            x, y = state
+            visitedCorners = list(state[1])
+            dx, dy = Actions.directionToVector(action)
 
-            "*** YOUR CODE HERE ***"
+            # if the successor of current is not at a wall, and successor hasn't been visited
+            # add successor to list and return
+
+            # cannot add tuple and float? trying to evaluate (x + dx) then assign to int
+            # then add to tuple nextx
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+
+            if not hitsWall:
+                nextNode = (nextx, nexty)
+                if nextNode in self.corners:
+                    if not nextNode in visitedCorners:
+                        visitedCorners.append(nextNode)
+                successors.append(((nextNode, visitedCorners), action), 1)
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
