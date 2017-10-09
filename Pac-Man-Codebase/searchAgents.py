@@ -340,24 +340,21 @@ class CornersProblem(search.SearchProblem):
             #   dx, dy = Actions.directionToVector(action)
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
-            x, y = state
-            visitedCorners = list(state[1])
-            dx, dy = Actions.directionToVector(action)
-
-            # if the successor of current is not at a wall, and successor hasn't been visited
-            # add successor to list and return
-
-            # cannot add tuple and float? trying to evaluate (x + dx) then assign to int
-            # then add to tuple nextx
-            nextx, nexty = int(x + dx), int(y + dy)
+            x,y = state[0]
+            dx,dy = Actions.directionToVector(action)
+            xs = x + dx
+            ys = y + dy
+            nextx, nexty = int(xs), int(ys)
             hitsWall = self.walls[nextx][nexty]
+            visitedCorners = list(state[1])
 
             if not hitsWall:
                 nextNode = (nextx, nexty)
                 if nextNode in self.corners:
                     if not nextNode in visitedCorners:
                         visitedCorners.append(nextNode)
-                successors.append(((nextNode, visitedCorners), action), 1)
+                successor = (((nextNode, visitedCorners), action), 1)
+                successors.append(successor)
 
         self._expanded += 1 # DO NOT CHANGE
         return successors

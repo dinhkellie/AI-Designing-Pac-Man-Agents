@@ -154,10 +154,12 @@ def breadthFirstSearch(problem):
             path = findPath(node)
             return path
         Explored[node.getState()] = True
-        for state, action, cost in problem.getSuccessors(node.getState()):
-            if state not in Explored:
-                nextNode = Node(state, action, cost, node)
-                Frontier.push(nextNode)
+        successors = problem.getSuccessors(node.getState())
+        for state in successors:
+            if len(state) > 1:
+                if state[0] not in Explored:
+                    nextNode = Node(state[0], state[1], state[2], node)
+                    Frontier.push(nextNode)
 
 
 def uniformCostSearch(problem):
@@ -173,7 +175,7 @@ def uniformCostSearch(problem):
             return []
         node = Frontier.pop()
         if problem.isGoalState(node.getState()):
-            path= findPath(node)
+            path = findPath(node)
             return path
         successors = problem.getSuccessors(node.getState())
         for state, action, cost in successors:
@@ -191,7 +193,7 @@ def nullHeuristic(state, problem=None):
     return 0
 
 def aStarSearch(problem, heuristic=nullHeuristic):
-        """Search the node that has the lowest combined cost and heuristic first."""
+    """Search the node that has the lowest combined cost and heuristic first."""
     # "*** YOUR CODE HERE ***"
     # head = Node(problem.getStartState(), None, 0, None)
     # Frontier = util.PriorityQueue()
@@ -233,6 +235,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                     totalCost = backwardCost+forwardCost
                     nextNode = Node(state, action, backwardCost, node)
                     Frontier.push(nextNode, totalCost)
+
 
 # Abbreviations
 bfs = breadthFirstSearch
