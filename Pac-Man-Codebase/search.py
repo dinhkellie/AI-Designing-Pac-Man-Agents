@@ -191,27 +191,48 @@ def nullHeuristic(state, problem=None):
     return 0
 
 def aStarSearch(problem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
+        """Search the node that has the lowest combined cost and heuristic first."""
+    # "*** YOUR CODE HERE ***"
+    # head = Node(problem.getStartState(), None, 0, None)
+    # Frontier = util.PriorityQueue()
+    # Frontier.push(head, head.getCost())
+    # Explored = set()
+    # path = []
+    # while(True):
+    #     if Frontier.isEmpty():
+    #         return []
+    #     node = Frontier.pop()
+    #     if problem.isGoalState(node.getState()):
+    #         path= findPath(node)
+    #         return path
+    #     successors = problem.getSuccessors(node.getState())
+    #     for state, action, cost in successors:
+    #         if state not in Explored:
+    #             Explored.add(state)
+    #             # cost = cost + node.getCost() + heuristic(state, problem)
+    #             nextNode = Node(state, action, cost, node)
+    #             Frontier.push(nextNode,cost)
+
     head = Node(problem.getStartState(), None, 0, None)
     Frontier = util.PriorityQueue()
     Frontier.push(head, head.getCost())
     Explored = set()
-    path = []
-    while(True):
+    while (True):
         if Frontier.isEmpty():
             return []
         node = Frontier.pop()
         if problem.isGoalState(node.getState()):
-            path= findPath(node)
+            path = findPath(node)
             return path
-        successors = problem.getSuccessors(node.getState())
-        for state, action, cost in successors:
-            if state not in Explored:
-                Explored.add(state)
-                cost = cost + node.getCost() + heuristic(state, problem)
-                nextNode = Node(state, action, cost, node)
-                Frontier.push(nextNode,cost)
+        if node.getState() not in Explored:
+            Explored.add(node.getState())
+            for state, action, cost in problem.getSuccessors(node.getState()):
+                if state not in Explored:
+                    backwardCost = cost + node.getCost()
+                    forwardCost = heuristic(state, problem)
+                    totalCost = backwardCost+forwardCost
+                    nextNode = Node(state, action, backwardCost, node)
+                    Frontier.push(nextNode, totalCost)
 
 # Abbreviations
 bfs = breadthFirstSearch
